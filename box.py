@@ -85,6 +85,7 @@ class Box(Widget):
     def set_radius(self, r):
         for b in self.balls:
             b.r = r
+            b.image.size = (2 * r, 2 * r)
 
     def set_gravity(self, g):
         for b in self.balls:
