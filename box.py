@@ -66,6 +66,7 @@ class Box(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.balls = []
+        self.is_ball_bounce = True
 
     def add_ball(self):
         b = Ball()
@@ -80,7 +81,7 @@ class Box(Widget):
     def set_color(self, color):
         for b in self.balls:
             b.color = color
-            
+
     def set_radius(self, r):
         for b in self.balls:
             b.r = r
@@ -97,8 +98,9 @@ class Box(Widget):
         n = self.balls.__len__()
         for i in range(n):
             self.balls[i].bounce_box()
-            for j in range(i + 1, n):
-                self.balls[i].bounce_ball(self.balls[j])
+            if self.is_ball_bounce:
+                for j in range(i + 1, n):
+                    self.balls[i].bounce_ball(self.balls[j])
         for b in self.balls:
             b.move(dt)
 
