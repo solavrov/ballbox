@@ -13,6 +13,9 @@ class BallBoxApp(App):
         box.add_ball().add_ball().add_ball().add_ball()
         box.add_ball().add_ball().add_ball().add_ball()
         box.add_ball().add_ball().add_ball().add_ball()
+        box.add_ball().add_ball().add_ball().add_ball()
+        box.set_gravity(100)
+        box.set_energy_loss(0.05)
         Clock.schedule_interval(box.move, 1.0 / 60.0)
 
         return box

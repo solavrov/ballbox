@@ -13,6 +13,8 @@ class Ball:
         self.p = Vector((Window.size[0] - 2 * self.r) * random() + self.r,
                         (Window.size[1] - 2 * self.r) * random() + self.r)
         self.v = Vector(200 * (random() - 0.5), 200 * (random() - 0.5))
+        self.g = Vector(0, 0)
+        self.loss = 0
         self.image = None
 
     def get_pos(self):
@@ -28,15 +30,19 @@ class Ball:
         if self.p.x < self.r:
             self.v.x = abs(self.v.x)
             self.p.x = self.r
+            self.v *= (1 - self.loss)
         if self.p.x > Window.size[0] - self.r:
             self.v.x = - abs(self.v.x)
             self.p.x = Window.size[0] - self.r
+            self.v *= (1 - self.loss)
         if self.p.y < self.r:
             self.v.y = abs(self.v.y)
             self.p.y = self.r
+            self.v *= (1 - self.loss)
         if self.p.y > Window.size[1] - self.r:
             self.v.y = - abs(self.v.y)
             self.p.y = Window.size[1] - self.r
+            self.v *= (1 - self.loss)
 
     def bounce_ball(self, ball): #clinging is still possible
         d = self.p.distance(ball.p)
@@ -46,8 +52,11 @@ class Ball:
             ball.v -= 2 * e.dot(ball.v) * e
             self.p -= (self.r + ball.r - d) / 2 * e
             ball.p += (self.r + ball.r - d) / 2 * e
+            self.v *= (1 - self.loss)
+            ball.v *= (1 - ball.loss)
 
     def move(self, dt):
+        self.v += self.g * dt
         self.p += self.v * dt
         self.image.pos = self.get_pos()
 
@@ -63,6 +72,14 @@ class Box(Widget):
         b.draw(self.canvas)
         self.balls.append(b)
         return self
+
+    def set_gravity(self, g):
+        for b in self.balls:
+            b.g = Vector(0, -g)
+
+    def set_energy_loss(self, loss):
+        for b in self.balls:
+            b.loss = loss
 
     def move(self, dt):
         n = self.balls.__len__()
