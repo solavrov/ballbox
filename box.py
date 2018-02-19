@@ -1,14 +1,15 @@
 from kivy.uix.widget import Widget
 from kivy.graphics import Ellipse, Color
 from kivy.core.window import Window
+#from kivy.vector import Vector
 from random import random as random
-from random import choice as choice
 from math import sqrt
+
 
 class Ball:
 
     def __init__(self):
-        self.color = Ball.get_rand_color()
+        self.color = random()
         self.radius = 25
         self.x = (Window.size[0] - 2 * self.radius) * random() + self.radius
         self.y = (Window.size[1] - 2 * self.radius) * random() + self.radius
@@ -16,21 +17,12 @@ class Ball:
         self.vy = 200 * (random() - 0.5)
         self.image = None
 
-    @staticmethod
-    def get_rand_color():
-        s = [0, 1]
-        while True:
-            c1, c2, c3 = choice(s), choice(s), choice(s)
-            if not (c1 == 0 and c2 == 0 and c3 == 0):
-                break
-        return c1, c2, c3
-
     def get_pos(self):
         return self.x - self.radius, self.y - self.radius
 
     def draw(self, canvas):
         with canvas:
-            Color(*self.color)
+            Color(self.color, 1, 1, mode="hsv")
             self.image = Ellipse(pos=self.get_pos(),
                                  size=(2 * self.radius, 2 * self.radius))
 
