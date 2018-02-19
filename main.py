@@ -24,4 +24,3 @@ class BallBoxApp(App):
 if __name__ == "__main__":
     BallBoxApp().run()
 
-

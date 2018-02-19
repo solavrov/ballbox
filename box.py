@@ -73,6 +73,18 @@ class Box(Widget):
         self.balls.append(b)
         return self
 
+    def add_balls(self, n):
+        for i in range(n):
+            self.add_ball()
+
+    def set_color(self, color):
+        for b in self.balls:
+            b.color = color
+            
+    def set_radius(self, r):
+        for b in self.balls:
+            b.r = r
+
     def set_gravity(self, g):
         for b in self.balls:
             b.g = Vector(0, -g)
