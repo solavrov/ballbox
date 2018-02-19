@@ -10,7 +10,7 @@ class BallBoxApp(App):
         print(Window.size)
 
         box = Box()
-        box.add_balls(30)
+        box.add_balls(100)
         box.set_radius(10)
         #box.set_gravity(100)
         #box.set_energy_loss(0.05)
