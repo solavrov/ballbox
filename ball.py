@@ -47,8 +47,9 @@ class Ball:
         d = self.p.distance(ball.p)
         if d < self.r + ball.r:
             e = (ball.p - self.p).normalize()
-            self.v -= 2 * e.dot(self.v) * e
-            ball.v -= 2 * e.dot(ball.v) * e
+            dv = e.dot(ball.v - self.v) * e
+            self.v += dv
+            ball.v -= dv
             self.p -= (self.r + ball.r - d) / 2 * e
             ball.p += (self.r + ball.r - d) / 2 * e
             self.v *= (1 - self.loss)
